@@ -1,4 +1,4 @@
-require './test/test_helper'
+require './test_helper'
 
 class KMLFileTest < Test::Unit::TestCase
   include KML
@@ -11,6 +11,17 @@ class KMLFileTest < Test::Unit::TestCase
       :geometry => Point.new(:coordinates=>'-122.0822035425683,37.42228990140251,0')
     )
     assert_equal File.read('test/simple_placemark.kml'), kml.render
+  end
+
+  def test_placemark_id
+    kml = KMLFile.new
+    kml.objects << Placemark.new(
+      :id => 12345,
+      :name => 'Simple placemark',
+      :description => 'Attached to the ground. Intelligently places itself at the height of the underlying terrain.',
+      :geometry => Point.new(:coordinates=>'-122.0822035425683,37.42228990140251,0')
+    )
+    assert_equal File.read('placemark_with_id.kml'), kml.render
   end
 
   def test_cdata_description

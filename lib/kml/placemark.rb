@@ -27,7 +27,12 @@ module KML
     attr_accessor :geometry
     
     def render(xm=Builder::XmlMarkup.new(:indent => 2))
-      xm.Placemark {
+      opts = Hash.new
+      if id
+        opts["id"] = id
+      end
+
+      xm.Placemark(opts) {
         super
         features.each { |f| f.render(xm) }
         plain_children.each { |c| xm << c }
