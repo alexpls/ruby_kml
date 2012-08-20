@@ -12,7 +12,7 @@ module KML
     attr_accessor :list_style
     
     def render(xm=Builder::XmlMarkup.new(:indent => 2))
-      opts = {:id => id} if id
+      id ? opts = {:id => id} : opts = {}
       xm.Style(opts) {
         %w(Icon Label Line Poly Balloon List).each do |name| 
           field = "#{name.downcase}_style".to_sym
