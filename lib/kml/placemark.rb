@@ -25,6 +25,7 @@
 module KML
   class Placemark < KML::Container
     attr_accessor :geometry
+    attr_accessor :style
     
     def render(xm=Builder::XmlMarkup.new(:indent => 2))
       opts = Hash.new
@@ -36,6 +37,7 @@ module KML
         super
         features.each { |f| f.render(xm) }
         plain_children.each { |c| xm << c }
+        style.render(xm) unless style.nil?
         geometry.render(xm) unless geometry.nil?
       }
     end
